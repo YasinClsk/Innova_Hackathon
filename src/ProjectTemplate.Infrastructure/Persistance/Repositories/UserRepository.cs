@@ -57,16 +57,7 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
         public async Task<User?> GetByIdAsync(int id)
         {
             var user = await Table.Include(x => x.TransactionTypes)
-                .ThenInclude(x => x.Transactions)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            return user;
-        }
-
-        public async Task<User?> GetUserTransactions(int id)
-        {
-            var user = await Table.Include(x => x.TransactionTypes)
-                .ThenInclude(x => x.Transactions)
+                .ThenInclude(x => x.Transactions.OrderByDescending(x => x.TransactionDate).Take(5))
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return user;
