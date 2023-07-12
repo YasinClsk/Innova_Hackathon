@@ -24,8 +24,10 @@ namespace ProjectTemplate.Application.Features.Commands.TransactionCommands.Upda
 
         public async Task Handle(UpdateTransactionCommandRequest request, CancellationToken cancellationToken)
         {
-            var transaction = _mapper.Map<Transaction>(request);
-            _transactionRepository.Update(transaction);
+            var dbTransaction = await _transactionRepository.GetByIdAsync(request.Id);
+            var transaction = _mapper.Map(request,dbTransaction);
+            
+            _transactionRepository.Update(transaction!);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

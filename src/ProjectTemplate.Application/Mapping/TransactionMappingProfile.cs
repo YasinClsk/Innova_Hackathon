@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using ProjectTemplate.Application.DTO_s;
 using ProjectTemplate.Application.Features.Commands.TransactionCommands.CreateTransaction;
+using ProjectTemplate.Application.Features.Commands.TransactionCommands.UpdateTransaction;
+using ProjectTemplate.Application.Features.Commands.TransactionTypeCommands.UpdateTransactionType;
 using ProjectTemplate.Application.Features.Queries.TransactionQueries.GetByIdTransaction;
 using ProjectTemplate.Domain.Entities;
 using System;
@@ -21,6 +23,8 @@ namespace ProjectTemplate.Application.Mapping
             CreateMap<Transaction, GetByIdTransactionQueryResponse>();
 
             CreateMap<Transaction, TransactionDTO>();
+
+            CreateMap<UpdateTransactionCommandRequest, Transaction>();
         }
     }
 }
