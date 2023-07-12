@@ -36,6 +36,13 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             await Table.AddAsync(transactionType);
         }
 
+        public async void Delete(int id)
+        {
+            var user = await Table.FirstOrDefaultAsync(x => x.Id == id);
+            Table.Remove(user!);
+
+        }
+
         public async Task<TransactionType?> GetByIdAsync(int Id, Pagination pagination)
         {
             var transactionType = await Table
@@ -47,6 +54,11 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
 
             return transactionType;
 
+        }
+
+        public void Update(TransactionType transactionType)
+        {
+            Table.Update(transactionType);
         }
     }
 }

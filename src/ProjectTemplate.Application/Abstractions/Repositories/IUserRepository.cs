@@ -18,6 +18,9 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
 
         Task CreateAsync(User user);
         Task CreateAsync(List<User> users);
+
+        void Update(User user);
+        Task Delete(int id);
         Task<bool> AnyAsync(User user);
         Task<bool> AnyAsync(int Id);
     }

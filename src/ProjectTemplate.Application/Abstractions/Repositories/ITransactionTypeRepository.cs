@@ -12,8 +12,9 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
     {
         Task<TransactionType?> GetByIdAsync(int Id, Pagination pagination);
         Task CreateAsync(TransactionType transactionType);
-
         Task<bool> AnyAsync(TransactionType transactionType);
         Task<bool> AnyAsync(int Id);
+        void Update(TransactionType transactionType);
+        Task Delete(int id);
     }
 }

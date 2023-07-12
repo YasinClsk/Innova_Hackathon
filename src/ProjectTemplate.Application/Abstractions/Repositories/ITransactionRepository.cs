@@ -11,5 +11,9 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
     {
         Task<Transaction?> GetByIdAsync(int Id, bool tracking = true);
         Task CreateAsync(Transaction transactionType);
+        void Update(Transaction transactionType);
+        Task Delete(int Id);
+        Task<bool> AnyAsync(Transaction transaction);
+        Task<bool> AnyAsync(int Id);
     }
 }

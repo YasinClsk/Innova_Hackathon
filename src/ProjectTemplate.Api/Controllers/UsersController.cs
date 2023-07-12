@@ -43,7 +43,7 @@ namespace ProjectTemplate.Api.Controllers
             return Ok(response);
         }
 
-        [HttpGet("charges/{id}")]
+        [HttpGet("{id}/charges")]
         public async Task<IActionResult> GetCharges(int id)
         {
             var response = await _userRepository.UserCharges(id);

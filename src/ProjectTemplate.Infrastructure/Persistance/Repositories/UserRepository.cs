@@ -44,6 +44,12 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             await Table.AddRangeAsync(users);
         }
 
+        public async Task Delete(int id)
+        {
+            var user = await Table.FirstOrDefaultAsync(x => x.Id == id);
+            Table.Remove(user!);
+        }
+
         public IQueryable<User> Get(Expression<Func<User, bool>> expression, bool tracking = true)
         {
             var query = Table.Where(expression);
@@ -64,6 +70,11 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             return user;
         }
 
+        public void Update(User user)
+        {
+            Table.Update(user);
+        }
+
         public async Task<List<UserCharges>> UserCharges(int id)
         {
             var userCharges = await _dbContext.TransactionTypes
@@ -71,15 +82,17 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
                 .Where(x => x.UserId == id)
                 .Select(x => new UserCharges
                 {
+                    Id = x.Id,
                     Cost = x.Transactions.Sum(x => x.Cost),
                     Title = x.Title
                 }).ToListAsync();
 
             userCharges.Add(new UserCharges
             {
+                Id = 0,
                 Cost = userCharges.Sum(x => x.Cost),
                 Title = "Total"
-            });
+            }); 
 
 
             return userCharges;
