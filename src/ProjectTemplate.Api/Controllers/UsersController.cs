@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTemplate.Api.Extensions;
 using ProjectTemplate.Application.Abstractions.Repositories;
+using ProjectTemplate.Application.DTO_s;
 using ProjectTemplate.Application.Features.Commands.UserCommands.CreateUser;
+using ProjectTemplate.Application.Features.Commands.UserCommands.DeleteUser;
+using ProjectTemplate.Application.Features.Commands.UserCommands.UpdateUser;
 using ProjectTemplate.Application.Features.Queries.UserQueries.GetByIdUser;
 
 namespace ProjectTemplate.Api.Controllers
@@ -48,6 +51,20 @@ namespace ProjectTemplate.Api.Controllers
         {
             var response = await _userRepository.UserCharges(id);
             return Ok(response);
+        }
+
+        [HttpPut("/update")]
+        public async Task<IActionResult> Update(UpdateUserCommandRequest request)
+        {
+            var response = await _sender.Send(request);
+            return Ok();
+        }
+
+        [HttpDelete("{id}/remove")]
+        public async Task<IActionResult> Remove(int id)
+        {
+            _ = await _sender.Send(new DeleteUserCommandRequest(id));
+            return NoContent();
         }
     }
 }

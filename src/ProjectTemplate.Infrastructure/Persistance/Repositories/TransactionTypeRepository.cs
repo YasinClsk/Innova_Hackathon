@@ -36,7 +36,7 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             await Table.AddAsync(transactionType);
         }
 
-        public async void Delete(int id)
+        public async Task Delete(int id)
         {
             var user = await Table.FirstOrDefaultAsync(x => x.Id == id);
             Table.Remove(user!);
