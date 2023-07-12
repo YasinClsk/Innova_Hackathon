@@ -2,7 +2,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjectTemplate.Application.Features.Commands.TransactionCommands.DeleteTransaction;
 using ProjectTemplate.Application.Features.Commands.TransactionTypeCommands.CreateTransactionType;
+using ProjectTemplate.Application.Features.Commands.TransactionTypeCommands.DeleteTransactionType;
+using ProjectTemplate.Application.Features.Commands.TransactionTypeCommands.UpdateTransactionType;
 using ProjectTemplate.Application.Features.Queries.TransactionTypeQueries.GetByIdTransactionType;
 using ProjectTemplate.Application.RequestParameters;
 
@@ -31,6 +34,20 @@ namespace ProjectTemplate.Api.Controllers
         {
             var response = await _sender.Send(new GetByIdTransactionTypeQueryRequest(id,pagination));
             return Ok(response);
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody]UpdateTransactionTypeCommandRequest request)
+        {
+            var response = await _sender.Send(request);
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}/delete")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            await _sender.Send(new DeleteTransactionTypeCommandRequest(id));
+            return NoContent();
         }
     }
 }

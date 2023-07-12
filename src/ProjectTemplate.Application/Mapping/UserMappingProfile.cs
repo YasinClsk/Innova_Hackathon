@@ -2,6 +2,7 @@
 using ProjectTemplate.Application.DTO_s;
 using ProjectTemplate.Application.Features.Commands.TransactionTypeCommands.CreateTransactionType;
 using ProjectTemplate.Application.Features.Commands.UserCommands.CreateUser;
+using ProjectTemplate.Application.Features.Commands.UserCommands.DeleteUser;
 using ProjectTemplate.Application.Features.Commands.UserCommands.UpdateUser;
 using ProjectTemplate.Application.Features.Queries.UserQueries.GetByIdUser;
 using ProjectTemplate.Domain.Entities;
@@ -24,7 +25,6 @@ namespace ProjectTemplate.Application.Mapping
 
             CreateMap<UpdateUserCommandRequest, User>();
             CreateMap<User, UpdateUserCommandResponse>();
-
         }
     }
 }

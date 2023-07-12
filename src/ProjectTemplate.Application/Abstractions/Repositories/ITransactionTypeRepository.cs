@@ -11,6 +11,7 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
     public interface ITransactionTypeRepository
     {
         Task<TransactionType?> GetByIdAsync(int Id, Pagination pagination);
+        Task<TransactionType?> GetByIdAsync(int Id);
         Task CreateAsync(TransactionType transactionType);
         Task<bool> AnyAsync(TransactionType transactionType);
         Task<bool> AnyAsync(int Id);

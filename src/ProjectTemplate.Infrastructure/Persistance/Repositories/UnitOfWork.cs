@@ -21,5 +21,10 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
         {
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            return await _context.SaveChangesAsync(cancellationToken);
+        }
     }
 }

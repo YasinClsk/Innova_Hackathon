@@ -56,6 +56,15 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
 
         }
 
+        public async Task<TransactionType?> GetByIdAsync(int Id)
+        {
+            var transactionType = await Table
+                .Include(x => x.Transactions.OrderByDescending(x => x.TransactionDate))
+                .FirstOrDefaultAsync(x => x.Id == Id);
+
+            return transactionType;
+        }
+
         public void Update(TransactionType transactionType)
         {
             Table.Update(transactionType);
