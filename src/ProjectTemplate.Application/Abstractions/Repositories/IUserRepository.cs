@@ -13,7 +13,7 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
     {
         IQueryable<User> Get(Expression<Func<User, bool>> expression, bool tracking = true);
         Task<User?> GetByIdAsync(int id);
-
+        Task<User?> GetByMailAsync(string mail);
         Task<List<User>> GetAllAsync();
 
         Task<List<UserCharges>> UserCharges(int id);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using ProjectTemplate.Application.Abstractions.Handlers;
 using ProjectTemplate.Application.DTO_s;
 using ProjectTemplate.Application.Options;
 using ProjectTemplate.Domain.Entities;
@@ -13,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace ProjectTemplate.Infrastructure.Infrastructure.Token
 {
-    public class TokenHandler
+    public class TokenHandler : ITokenHandler
     {
         private readonly TokenOption TokenOption;
         public TokenHandler(IOptions<TokenOption> options)
         {
             TokenOption = options.Value;
         }
-        public string CreateToken(LoginDTO login)
+        public string CreateToken(TokenDTO tokenDTO)
         {
             var issuer = TokenOption.Issuer;
             var audience = TokenOption.Audience;
@@ -29,10 +30,10 @@ namespace ProjectTemplate.Infrastructure.Infrastructure.Token
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("Id", login.Id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Sub, login.Email),
-                    new Claim(JwtRegisteredClaimNames.GivenName, login.FirstName),
-                    new Claim(JwtRegisteredClaimNames.FamilyName, login.LastName),
+                    new Claim("Id", tokenDTO.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub, tokenDTO.Email),
+                    new Claim(JwtRegisteredClaimNames.GivenName, tokenDTO.FirstName),
+                    new Claim(JwtRegisteredClaimNames.FamilyName, tokenDTO.LastName),
                     new Claim(JwtRegisteredClaimNames.Jti,
                     Guid.NewGuid().ToString())
                 }),

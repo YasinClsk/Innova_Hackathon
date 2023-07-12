@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectTemplate.Application.Abstractions.Handlers;
 using ProjectTemplate.Application.Abstractions.Repositories;
 using ProjectTemplate.Infrastructure.Infrastructure.Token;
 using ProjectTemplate.Infrastructure.Persistance.Contexts;
@@ -16,7 +17,7 @@ namespace ProjectTemplate.Infrastructure.Infrastructure.Dependencies
     {
         public static void AddInfrastructureDependencies(this IServiceCollection services)
         {
-            services.AddSingleton<TokenHandler>();
+            services.AddSingleton<ITokenHandler,TokenHandler>();
         }
     }
 }

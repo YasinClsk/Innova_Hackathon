@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTemplate.Application.DTO_s;
+using ProjectTemplate.Application.Features.Commands.AuthCommands.LoginCommand;
 using ProjectTemplate.Domain.Entities;
 using ProjectTemplate.Infrastructure.Infrastructure.Token;
 
@@ -11,17 +13,17 @@ namespace ProjectTemplate.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly TokenHandler _tokenHandler;
+        private readonly ISender _sender;
 
-        public AuthController(TokenHandler tokenHandler)
+        public AuthController(ISender sender)
         {
-            _tokenHandler = tokenHandler;
+            _sender = sender;
         }
-        
+
         [HttpPost("login")]
-        public IActionResult Login(LoginDTO loginDTO)
+        public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
-            var token = _tokenHandler.CreateToken(loginDTO);
+            var token = await _sender.Send(new LoginCommandRequest(loginDTO.Email,loginDTO.Password));
             return Ok(token);
         }
     }

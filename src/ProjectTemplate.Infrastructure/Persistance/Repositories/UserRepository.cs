@@ -75,6 +75,14 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             return user;
         }
 
+        public async Task<User?> GetByMailAsync(string mail)
+        {
+            var user = await Table
+                .FirstOrDefaultAsync(x => x.Email == mail);
+
+            return user;
+        }
+
         public void Update(User user)
         {
             Table.Update(user);
