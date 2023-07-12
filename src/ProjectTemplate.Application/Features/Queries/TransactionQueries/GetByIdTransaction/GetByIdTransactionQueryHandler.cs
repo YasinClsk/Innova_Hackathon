@@ -30,9 +30,4 @@ namespace ProjectTemplate.Application.Features.Queries.TransactionQueries.GetByI
         }
     }
 
-    public record GetByIdTransactionQueryRequest(int Id) : IRequest<GetByIdTransactionQueryResponse>;
-
-    public record GetByIdTransactionQueryResponse
-        (decimal Cost, String Name, String Description, DateTime TransactionDate, int TransactionTypeId);
-
 }
