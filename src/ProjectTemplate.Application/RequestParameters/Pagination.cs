@@ -8,7 +8,14 @@ namespace ProjectTemplate.Application.RequestParameters
 {
     public class Pagination
     {
-        public int Page { get; set; } = 0;
-        public int Size { get; set; } = 10;
+        public int Page { get; set; } = 1;
+
+        private int size;
+
+        public int Size
+        {
+            get { return size; }
+            set { size = value > 100 ? 100 : value; }
+        }
     }
 }

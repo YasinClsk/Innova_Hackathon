@@ -40,7 +40,7 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
         {
             var transactionType = await Table
                 .Include(x => x.Transactions.OrderByDescending(x => x.TransactionDate)
-                .Skip(pagination.Page * pagination.Size)
+                .Skip((pagination.Page - 1) * pagination.Size)
                 .Take(pagination.Size))
                 .FirstOrDefaultAsync(x => x.Id == Id);
 
