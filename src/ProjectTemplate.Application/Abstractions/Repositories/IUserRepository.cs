@@ -14,8 +14,10 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
         IQueryable<User> Get(Expression<Func<User, bool>> expression, bool tracking = true);
         Task<User?> GetByIdAsync(int id);
 
-        Task<List<UserCharges>> UserCharges(int id);
+        Task<List<User>> GetAllAsync();
 
+        Task<List<UserCharges>> UserCharges(int id);
+        Task<decimal> UserChargesBetweenDates(int id, DateTime StartDate, DateTime EndDate);
         Task CreateAsync(User user);
         Task CreateAsync(List<User> users);
 

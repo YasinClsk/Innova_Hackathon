@@ -61,6 +61,11 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
                 .Where(expression);
         }
 
+        public async Task<List<User>> GetAllAsync()
+        {
+            return await Table.ToListAsync();
+        }
+
         public async Task<User?> GetByIdAsync(int id)
         {
             var user = await Table.Include(x => x.TransactionTypes)
@@ -94,8 +99,23 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
                 Title = "Total"
             }); 
 
-
             return userCharges;
+        }
+
+        public async Task<decimal> UserChargesBetweenDates(int id, DateTime StartDate, DateTime EndDate)
+        {
+            var userCharges = await _dbContext.TransactionTypes
+                .Include(x => x.Transactions
+                .Where(x => x.TransactionDate >= StartDate && x.TransactionDate <= EndDate))
+                .Where(x => x.UserId == id)
+                .Select(x => new UserCharges
+                {
+                    Id = x.Id,
+                    Cost = x.Transactions.Sum(x => x.Cost),
+                    Title = x.Title
+                }).ToListAsync();
+
+            return userCharges.Sum(x => x.Cost);
         }
     }
 }
