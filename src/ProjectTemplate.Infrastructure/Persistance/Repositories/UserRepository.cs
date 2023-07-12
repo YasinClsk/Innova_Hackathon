@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectTemplate.Application.Abstractions.Repositories;
+using ProjectTemplate.Application.DTO_s;
 using ProjectTemplate.Domain.Entities;
 using ProjectTemplate.Infrastructure.Persistance.Contexts;
 using System;
@@ -61,6 +62,27 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return user;
+        }
+
+        public async Task<List<UserCharges>> UserCharges(int id)
+        {
+            var userCharges = await _dbContext.TransactionTypes
+                .Include(x => x.Transactions)
+                .Where(x => x.UserId == id)
+                .Select(x => new UserCharges
+                {
+                    Cost = x.Transactions.Sum(x => x.Cost),
+                    Title = x.Title
+                }).ToListAsync();
+
+            userCharges.Add(new UserCharges
+            {
+                Cost = userCharges.Sum(x => x.Cost),
+                Title = "Total"
+            });
+
+
+            return userCharges;
         }
     }
 }

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTemplate.Api.Extensions;
+using ProjectTemplate.Application.Abstractions.Repositories;
 using ProjectTemplate.Application.Features.Commands.UserCommands.CreateUser;
 using ProjectTemplate.Application.Features.Queries.UserQueries.GetByIdUser;
 
@@ -14,10 +15,12 @@ namespace ProjectTemplate.Api.Controllers
     {
         private readonly ISender _sender;
         private readonly ILogger<UsersController> _logger;
-        public UsersController(ISender sender, ILogger<UsersController> logger)
+        private readonly IUserRepository _userRepository;
+        public UsersController(ISender sender, ILogger<UsersController> logger, IUserRepository userRepository)
         {
             _sender = sender;
             _logger = logger;
+            _userRepository = userRepository;
         }
 
         [HttpPost]
@@ -37,6 +40,13 @@ namespace ProjectTemplate.Api.Controllers
             var response = await _sender.Send(new GetByIdUserQueryRequest(id));
             _logger.Log(LogLevel.Error, "{@Id} kullanıcı getirilmiştir", id);
 
+            return Ok(response);
+        }
+
+        [HttpGet("charges/{id}")]
+        public async Task<IActionResult> GetCharges(int id)
+        {
+            var response = await _userRepository.UserCharges(id);
             return Ok(response);
         }
     }

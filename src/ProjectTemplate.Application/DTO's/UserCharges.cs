@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProjectTemplate.Application.DTO_s
 {
-    public class TransactionTypeDTO
+    public class UserCharges
     {
         public int Id { get; set; }
-        public List<TransactionDTO> Transactions { get; set; } = null!;
-        public String Title { get; set; } = null!;
-        public String Description { get; set; } = null!;
+        public String Title { get; set; } = String.Empty;
+        public decimal Cost { get; set; }
     }
 }
