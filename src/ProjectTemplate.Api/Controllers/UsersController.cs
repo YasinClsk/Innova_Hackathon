@@ -34,7 +34,7 @@ namespace ProjectTemplate.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var response = await _sender.Send(new GetByIdProductQueryRequest(id));
+            var response = await _sender.Send(new GetByIdUserQueryRequest(id));
             _logger.Log(LogLevel.Error, "{@Id} kullanıcı getirilmiştir", id);
 
             return Ok(response);

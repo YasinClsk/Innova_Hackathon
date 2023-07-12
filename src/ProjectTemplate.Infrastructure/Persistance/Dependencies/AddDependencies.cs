@@ -23,6 +23,8 @@ namespace ProjectTemplate.Infrastructure.Persistance.Dependencies
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
         }
     }
 }

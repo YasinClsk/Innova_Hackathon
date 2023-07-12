@@ -14,17 +14,23 @@ namespace ProjectTemplate.Application.Features.Commands.TransactionTypeCommands.
         : IRequestHandler<CreateTransactionTypeCommandRequest, CreateTransactionTypeCommandResponse>
     {
         private readonly ITransactionTypeRepository _transactionTypeRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public CreateTransactionTypeCommandHandler(ITransactionTypeRepository transactionTypeRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public CreateTransactionTypeCommandHandler(ITransactionTypeRepository transactionTypeRepository, IMapper mapper, IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
             _transactionTypeRepository = transactionTypeRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
         }
 
         public async Task<CreateTransactionTypeCommandResponse> Handle(CreateTransactionTypeCommandRequest request, CancellationToken cancellationToken)
         {
+            if (!(await _userRepository.AnyAsync(request.UserId)))
+                throw new Exception("User not found");
+
+            // todo : Exception özelleştirilicek
 
             var transactionType = _mapper.Map<TransactionType>(request);
 

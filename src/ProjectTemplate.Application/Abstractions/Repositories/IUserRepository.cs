@@ -11,8 +11,11 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
     public interface IUserRepository
     {
         IQueryable<User> Get(Expression<Func<User, bool>> expression, bool tracking = true);
-        Task<User?> GetByIdAsync(int Id, bool tracking = true);
+        Task<User?> GetUserTransactions(int id);
+        Task<User?> GetByIdAsync(int id);
         Task CreateAsync(User user);
         Task CreateAsync(List<User> users);
+        Task<bool> AnyAsync(User user);
+        Task<bool> AnyAsync(int Id);
     }
 }

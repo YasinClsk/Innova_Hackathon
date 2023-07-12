@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using ProjectTemplate.Application.DTO_s;
+using ProjectTemplate.Application.Features.Commands.TransactionTypeCommands.CreateTransactionType;
 using ProjectTemplate.Application.Features.Commands.UserCommands.CreateUser;
+using ProjectTemplate.Application.Features.Queries.UserQueries.GetByIdUser;
 using ProjectTemplate.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,8 @@ namespace ProjectTemplate.Application.Mapping
         {
             CreateMap<CreateUserCommandRequest, User>();
             CreateMap<User, CreateUserCommandResponse>();
+
+            CreateMap<User, UserDTO>();
         }
     }
 }

@@ -15,12 +15,23 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
     {
         private readonly ApplicationDbContext _dbContext;
 
+
         public UserRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         private DbSet<User> Table => _dbContext.Users;
+
+        public async Task<bool> AnyAsync(User user)
+        {
+            return await AnyAsync(user.Id);
+        }
+
+        public async Task<bool> AnyAsync(int Id)
+        {
+            return await Table.AnyAsync(x => x.Id == Id);
+        }
 
         public async Task CreateAsync(User user)
         {
@@ -43,13 +54,22 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
                 .Where(expression);
         }
 
-        public async Task<User?> GetByIdAsync(int Id, bool tracking = true)
+        public async Task<User?> GetByIdAsync(int id)
         {
-            var query = Table.AsQueryable();
-            if (!tracking)
-                query = query.AsNoTracking();
+            var user = await Table.Include(x => x.TransactionTypes)
+                .ThenInclude(x => x.Transactions)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-            return await Table.FindAsync(Id);
+            return user;
+        }
+
+        public async Task<User?> GetUserTransactions(int id)
+        {
+            var user = await Table.Include(x => x.TransactionTypes)
+                .ThenInclude(x => x.Transactions)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return user;
         }
     }
 }

@@ -10,39 +10,28 @@ using System.Threading.Tasks;
 
 namespace ProjectTemplate.Infrastructure.Persistance.Repositories
 {
-    public class TransactionTypeRepository : ITransactionTypeRepository
+    public class TransactionRepository : ITransactionRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public TransactionTypeRepository(ApplicationDbContext context)
+        public TransactionRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        private DbSet<TransactionType> Table => _context.TransactionTypes;
 
-        public async Task<bool> AnyAsync(TransactionType transactionType)
-        {
-            return await AnyAsync(transactionType.Id);
-        }
-
-        public async Task<bool> AnyAsync(int Id)
-        {
-            return await Table.AnyAsync(x => x.Id == Id);
-        }
-
-        public async Task CreateAsync(TransactionType transactionType)
+        private DbSet<Transaction> Table => _context.Transactions;
+        public async Task CreateAsync(Transaction transactionType)
         {
             await Table.AddAsync(transactionType);
         }
 
-        public async Task<TransactionType?> GetByIdAsync(int Id, bool tracking = true)
+        public async Task<Transaction?> GetByIdAsync(int Id, bool tracking = true)
         {
             var query = Table.AsQueryable();
             if (!tracking)
                 query = query.AsNoTracking();
 
             return await Table.FindAsync(Id);
-
         }
     }
 }

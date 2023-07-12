@@ -15,6 +15,7 @@ namespace ProjectTemplate.Domain.Entities
         public String Name { get; set; } = null!;
         public String Description { get; set; } = null!;
         public DateTime TransactionDate { get; set; }
+        public int TransactionTypeId { get; set; }
 
         public TransactionType TransactionType { get; set; } = null!;
     }
