@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using ProjectTemplate.Application.Abstractions.Repositories;
+using ProjectTemplate.Application.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,10 @@ namespace ProjectTemplate.Application.Features.Queries.TransactionTypeQueries.Ge
 
         public async Task<GetByIdTransactionTypeQueryResponse> Handle(GetByIdTransactionTypeQueryRequest request, CancellationToken cancellationToken)
         {
-            var transactionType = await _transactionTypeRepository.GetByIdAsync(request.Id);
-            var response = _mapper.Map<GetByIdTransactionTypeQueryResponse>(transactionType);
+            var transactionType = await _transactionTypeRepository.GetByIdAsync(request.Id,request.Pagination);
 
-            return response;
+            var transactionTypeDto = _mapper.Map<TransactionTypeDTO>(transactionType);
+            return new GetByIdTransactionTypeQueryResponse(transactionTypeDto);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectTemplate.Application.Abstractions.Repositories;
+using ProjectTemplate.Application.RequestParameters;
 using ProjectTemplate.Domain.Entities;
 using ProjectTemplate.Infrastructure.Persistance.Contexts;
 using System;
@@ -35,13 +36,16 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             await Table.AddAsync(transactionType);
         }
 
-        public async Task<TransactionType?> GetByIdAsync(int Id, bool tracking = true)
+        public async Task<TransactionType?> GetByIdAsync(int Id, Pagination pagination)
         {
-            var query = Table.AsQueryable();
-            if (!tracking)
-                query = query.AsNoTracking();
+            var transactionType = await Table
+                .Include(x => x.Transactions.OrderByDescending(x => x.TransactionDate)
+                .Skip(pagination.Page * pagination.Size)
+                .Take(pagination.Size))
+                .FirstOrDefaultAsync(x => x.Id == Id);
 
-            return await Table.FindAsync(Id);
+
+            return transactionType;
 
         }
     }

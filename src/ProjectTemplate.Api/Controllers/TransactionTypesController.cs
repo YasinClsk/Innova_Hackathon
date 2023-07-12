@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTemplate.Application.Features.Commands.TransactionTypeCommands.CreateTransactionType;
 using ProjectTemplate.Application.Features.Queries.TransactionTypeQueries.GetByIdTransactionType;
+using ProjectTemplate.Application.RequestParameters;
 
 namespace ProjectTemplate.Api.Controllers
 {
@@ -26,9 +27,9 @@ namespace ProjectTemplate.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] int id)
+        public async Task<IActionResult> Get([FromRoute] int id, [FromQuery] Pagination pagination)
         {
-            var response = await _sender.Send(new GetByIdTransactionTypeQueryRequest(id));
+            var response = await _sender.Send(new GetByIdTransactionTypeQueryRequest(id,pagination));
             return Ok(response);
         }
     }

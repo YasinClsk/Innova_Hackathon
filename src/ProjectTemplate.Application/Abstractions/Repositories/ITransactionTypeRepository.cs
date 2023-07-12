@@ -1,4 +1,5 @@
-﻿using ProjectTemplate.Domain.Entities;
+﻿using ProjectTemplate.Application.RequestParameters;
+using ProjectTemplate.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
 {
     public interface ITransactionTypeRepository
     {
-        Task<TransactionType?> GetByIdAsync(int Id, bool tracking = true);
+        Task<TransactionType?> GetByIdAsync(int Id, Pagination pagination);
         Task CreateAsync(TransactionType transactionType);
 
         Task<bool> AnyAsync(TransactionType transactionType);
