@@ -11,6 +11,6 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
     public interface IUserChargeRepository
     {
         Task CreateAsync(UserCharge userCharge);
-        Task<UserCharge?> GetAsync(int userId, ChargeInterval chargeInterval = ChargeInterval.Daily);
+        Task<UserCharge?> GetAsync(int userId, DateTime date,ChargeInterval chargeInterval = ChargeInterval.Daily);
     }
 }

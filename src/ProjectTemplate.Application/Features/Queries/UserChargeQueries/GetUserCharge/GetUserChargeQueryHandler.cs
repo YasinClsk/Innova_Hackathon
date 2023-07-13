@@ -21,7 +21,7 @@ namespace ProjectTemplate.Application.Features.Queries.UserChargeQueries.GetUser
 
         public async Task<GetUsersChargeQueryResponse> Handle(GetUsersChargeQueryRequest request, CancellationToken cancellationToken)
         {
-            var userCharge = await _userChargeRepository.GetAsync(request.UserId, request.ChargeInterval);
+            var userCharge = await _userChargeRepository.GetAsync(request.UserId,request.DateTime ,request.ChargeInterval);
 
             if (userCharge is null)
                 throw new Exception("Kayıt bulunamadı");
@@ -36,7 +36,9 @@ namespace ProjectTemplate.Application.Features.Queries.UserChargeQueries.GetUser
     }
 
     public record GetUsersChargeQueryRequest(int UserId,
+                                             DateTime DateTime,
                                              ChargeInterval ChargeInterval)
+
         : IRequest<GetUsersChargeQueryResponse>;
     public record GetUsersChargeQueryResponse(DateTime StartDate,
                                               DateTime EndDate,

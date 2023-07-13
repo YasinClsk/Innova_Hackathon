@@ -60,7 +60,9 @@ namespace ProjectTemplate.Api.Controllers
         public async Task<IActionResult> GetSummary([FromRoute]int userId, [
             FromQuery]ChargeInterval intervalType, int day, int month,int year)
         {
-            var response = await _sender.Send(new GetUsersChargeQueryRequest(userId, intervalType));
+
+            var datetime = new DateTime(year,month, day);
+            var response = await _sender.Send(new GetUsersChargeQueryRequest(userId,datetime ,intervalType));
             return Ok(response);
         }
 

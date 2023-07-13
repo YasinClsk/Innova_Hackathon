@@ -6,6 +6,7 @@ using ProjectTemplate.Infrastructure.Persistance.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,10 +30,12 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             await Table.AddAsync(userCharge);
         }
 
-        public async Task<UserCharge?> GetAsync(int userId, ChargeInterval chargeInterval = ChargeInterval.Daily)
+        public async Task<UserCharge?> GetAsync(int userId, DateTime date,
+            ChargeInterval chargeInterval = ChargeInterval.Daily)
         {
             var charge = await Table.OrderByDescending(x => x.CreatedDate)
-                .FirstOrDefaultAsync(x => x.UserId == userId && x.ChargeInterval == chargeInterval);
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.ChargeInterval == chargeInterval && 
+                x.StartDate <= date && x.EndDate >= date);
 
             return charge;
         }
