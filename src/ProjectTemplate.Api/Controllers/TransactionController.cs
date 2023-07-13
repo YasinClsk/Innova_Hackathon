@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTemplate.Application.Features.Commands.TransactionCommands.CreateTransaction;
@@ -22,6 +23,7 @@ namespace ProjectTemplate.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateTransactionCommandRequest request)
         {
+            throw new Exception("Test");
             var response = await _sender.Send(request);
             return CreatedAtAction(nameof(Get),new {Id = response.Id},response);
         }
@@ -40,10 +42,10 @@ namespace ProjectTemplate.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("delete")]
-        public async Task<IActionResult> Update([FromBody] DeleteTransactionCommandRequest request)
+        [HttpDelete("{id}/delete")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            await _sender.Send(request);
+            await _sender.Send(new DeleteTransactionCommandRequest(id));
             return NoContent();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTemplate.Application.Features.Commands.TransactionCommands.DeleteTransaction;
@@ -13,6 +14,7 @@ namespace ProjectTemplate.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransactionTypesController : ControllerBase
     {
         private readonly ISender _sender;

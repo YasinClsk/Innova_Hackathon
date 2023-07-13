@@ -11,18 +11,18 @@ namespace ProjectTemplate.Application.Features.Commands.TransactionCommands.Dele
 {
     public class DeleteTransactionCommandHandler : IRequestHandler<DeleteTransactionCommandRequest>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly ITransactionRepository _transactionRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteTransactionCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public DeleteTransactionCommandHandler(ITransactionRepository transactionRepository, IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _transactionRepository = transactionRepository;
             _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(DeleteTransactionCommandRequest request, CancellationToken cancellationToken)
         {
-            await _userRepository.Delete(request.Id);
+            await _transactionRepository.Delete(request.Id);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

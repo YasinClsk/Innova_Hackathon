@@ -22,8 +22,6 @@ namespace ProjectTemplate.Api.Middlewares
             }
             catch (FluentValidation.ValidationException exception)
             {
-                context.Response.StatusCode = 400;
-
                 var errors = exception.Errors.Select(err => new Error
                 {
                     PropertyName = err.PropertyName,
@@ -36,6 +34,20 @@ namespace ProjectTemplate.Api.Middlewares
                 };
 
                 var errorText = JsonSerializer.Serialize(errorModel);
+                context.Response.StatusCode = 400;
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(errorText);
+            }
+            catch (Exception exception)
+            {
+                var error = new
+                {
+                    StatusCode = 400,
+                    ErrorMessage = exception.Message,
+                    ExceptionDetails = exception.InnerException
+                };
+
+                var errorText = JsonSerializer.Serialize(error);
                 context.Response.StatusCode = 400;
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(errorText);
