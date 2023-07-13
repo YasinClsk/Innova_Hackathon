@@ -23,7 +23,6 @@ namespace ProjectTemplate.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateTransactionCommandRequest request)
         {
-            throw new Exception("Test");
             var response = await _sender.Send(request);
             return CreatedAtAction(nameof(Get),new {Id = response.Id},response);
         }

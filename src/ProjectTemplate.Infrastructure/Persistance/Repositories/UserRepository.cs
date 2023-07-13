@@ -110,20 +110,21 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             return userCharges;
         }
 
-        public async Task<decimal> UserChargesBetweenDates(int id, DateTime StartDate, DateTime EndDate)
+        public async Task<decimal> UserChargesBetweenDates(int id, DateOnly StartDate, DateOnly EndDate)
         {
-            var userCharges = await _dbContext.TransactionTypes
+            var transactionTypes = await _dbContext.TransactionTypes
                 .Include(x => x.Transactions
-                .Where(x => x.TransactionDate >= StartDate && x.TransactionDate <= EndDate))
+                .Where(x => DateOnly.FromDateTime(x.TransactionDate) >= StartDate && DateOnly.FromDateTime(x.TransactionDate) <= EndDate))
                 .Where(x => x.UserId == id)
-                .Select(x => new UserCharges
-                {
-                    Id = x.Id,
-                    Cost = x.Transactions.Sum(x => x.Cost),
-                    Title = x.Title
-                }).ToListAsync();
+                .ToListAsync();
 
-            return userCharges.Sum(x => x.Cost);
+            decimal cost = 0;
+            foreach (var transactionType in transactionTypes)
+            {
+                cost += transactionType.Transactions.Sum(x => x.Cost);
+            }
+
+            return cost;
         }
     }
 }

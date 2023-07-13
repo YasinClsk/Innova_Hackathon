@@ -24,6 +24,8 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
 
         public async Task CreateAsync(UserCharge userCharge)
         {
+            var charge = await Table.FirstOrDefaultAsync(x => x.UserId == userCharge.UserId && userCharge.ChargeInterval == ChargeInterval.Daily);
+
             await Table.AddAsync(userCharge);
         }
 

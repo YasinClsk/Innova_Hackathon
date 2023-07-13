@@ -12,8 +12,8 @@ using ProjectTemplate.Infrastructure.Persistance.Contexts;
 namespace ProjectTemplate.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230713074633_mig_5")]
-    partial class mig_5
+    [Migration("20230713091444_mig_1")]
+    partial class mig_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,7 +53,7 @@ namespace ProjectTemplate.Infrastructure.Migrations
                     b.Property<int>("TransactionTypeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -82,7 +82,7 @@ namespace ProjectTemplate.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -124,7 +124,7 @@ namespace ProjectTemplate.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -155,7 +155,7 @@ namespace ProjectTemplate.Infrastructure.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -165,7 +165,7 @@ namespace ProjectTemplate.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCharge");
+                    b.ToTable("UserCharges");
                 });
 
             modelBuilder.Entity("ProjectTemplate.Domain.Entities.Transaction", b =>

@@ -17,7 +17,7 @@ namespace ProjectTemplate.Application.Abstractions.Repositories
         Task<List<User>> GetAllAsync();
 
         Task<List<UserCharges>> UserCharges(int id);
-        Task<decimal> UserChargesBetweenDates(int id, DateTime StartDate, DateTime EndDate);
+        Task<decimal> UserChargesBetweenDates(int id, DateOnly StartDate, DateOnly EndDate);
         Task CreateAsync(User user);
         Task CreateAsync(List<User> users);
 
