@@ -32,9 +32,9 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddSwaggerDependencies();
 
-builder.Services.AddHostedService<DailyChargesService>();
-builder.Services.AddHostedService<MonthlyChargesService>();
-builder.Services.AddHostedService<WeeklyChargesService>();
+//builder.Services.AddHostedService<DailyChargesService>();
+//builder.Services.AddHostedService<MonthlyChargesService>();
+//builder.Services.AddHostedService<WeeklyChargesService>();
 
 builder.Services.Configure<TokenOption>(builder.Configuration.GetSection("Jwt"));
 

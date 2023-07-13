@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Cronos;
+using Microsoft.EntityFrameworkCore;
 using ProjectTemplate.Application.Abstractions.Repositories;
 using ProjectTemplate.Domain.Entities;
 using ProjectTemplate.Domain.Enums;
@@ -21,7 +22,9 @@ namespace ProjectTemplate.Api.BackgroundServices
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using var timer = new CronTimer("0 1 * * *", TimeZoneInfo.Local);
+            //using var timer = new CronTimer("0 1 * * *", TimeZoneInfo.Local);
+            using var timer = new CronTimer(CronExpression.Parse("*/30 * * * * *", CronFormat.IncludeSeconds));
+
 
             while (await timer.WaitForNextTickAsync(stoppingToken) && !stoppingToken.IsCancellationRequested)
             {
@@ -41,7 +44,7 @@ namespace ProjectTemplate.Api.BackgroundServices
                 foreach (var user in users)
                 {
                     var dailyCost = await userRepository
-                        .UserChargesBetweenDates(user.Id, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(-1)));
+                        .UserChargesBetweenDates(user.Id, DateTime.Now, DateTime.Now.AddDays(-1));
 
                     await userChargeRepository.CreateAsync(new UserCharge
                     {

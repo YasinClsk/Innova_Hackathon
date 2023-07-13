@@ -1,4 +1,5 @@
-﻿using ProjectTemplate.Application.Abstractions.Repositories;
+﻿using Cronos;
+using ProjectTemplate.Application.Abstractions.Repositories;
 using ProjectTemplate.Domain.Entities;
 using ProjectTemplate.Domain.Enums;
 using Sgbj.Cron;
@@ -21,7 +22,8 @@ namespace ProjectTemplate.Api.BackgroundServices
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using var timer = new CronTimer("0 0 * * 1", TimeZoneInfo.Local);
+            //using var timer = new CronTimer("0 0 * * 1", TimeZoneInfo.Local);
+            using var timer = new CronTimer(CronExpression.Parse("*/30 * * * * *", CronFormat.IncludeSeconds));
 
             while (await timer.WaitForNextTickAsync(stoppingToken) && !stoppingToken.IsCancellationRequested)
             {
@@ -41,7 +43,7 @@ namespace ProjectTemplate.Api.BackgroundServices
                 foreach (var user in users)
                 {
                     var weeklyCost = await userRepository
-                        .UserChargesBetweenDates(user.Id, DateOnly.FromDateTime(DateTime.Now.AddDays(-WEEK)), DateOnly.FromDateTime(DateTime.Now));
+                        .UserChargesBetweenDates(user.Id, DateTime.Now.AddDays(-WEEK), DateTime.Now);
 
                     await userChargeRepository.CreateAsync(new UserCharge
                     {

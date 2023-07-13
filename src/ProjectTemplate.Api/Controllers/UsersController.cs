@@ -58,7 +58,7 @@ namespace ProjectTemplate.Api.Controllers
         [HttpGet("{userId}/summary")]
         [ProducesResponseType(typeof(GetUsersChargeQueryResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetSummary([FromRoute]int userId, [
-            FromQuery]ChargeInterval intervalType)
+            FromQuery]ChargeInterval intervalType, int day, int month,int year)
         {
             var response = await _sender.Send(new GetUsersChargeQueryRequest(userId, intervalType));
             return Ok(response);

@@ -110,11 +110,11 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
             return userCharges;
         }
 
-        public async Task<decimal> UserChargesBetweenDates(int id, DateOnly StartDate, DateOnly EndDate)
+        public async Task<decimal> UserChargesBetweenDates(int id, DateTime StartDate, DateTime EndDate)
         {
             var transactionTypes = await _dbContext.TransactionTypes
                 .Include(x => x.Transactions
-                .Where(x => DateOnly.FromDateTime(x.TransactionDate) >= StartDate && DateOnly.FromDateTime(x.TransactionDate) <= EndDate))
+                .Where(x => x.TransactionDate >= StartDate && (x.TransactionDate) <= EndDate))
                 .Where(x => x.UserId == id)
                 .ToListAsync();
 

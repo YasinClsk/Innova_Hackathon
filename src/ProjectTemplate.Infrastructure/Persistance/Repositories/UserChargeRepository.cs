@@ -31,7 +31,7 @@ namespace ProjectTemplate.Infrastructure.Persistance.Repositories
 
         public async Task<UserCharge?> GetAsync(int userId, ChargeInterval chargeInterval = ChargeInterval.Daily)
         {
-            var charge = await Table
+            var charge = await Table.OrderByDescending(x => x.CreatedDate)
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.ChargeInterval == chargeInterval);
 
             return charge;
