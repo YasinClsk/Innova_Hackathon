@@ -15,5 +15,6 @@ namespace ProjectTemplate.Domain.Entities
         public String LastName { get; set; } = null!;
 
         public ICollection<TransactionType> TransactionTypes { get; set; } = null!;
+        public ICollection<UserCharge> UserCharges { get; set; } = null!;
     }
 }

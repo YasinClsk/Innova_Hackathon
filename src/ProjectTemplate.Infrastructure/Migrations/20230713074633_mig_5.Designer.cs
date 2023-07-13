@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectTemplate.Infrastructure.Persistance.Contexts;
 
@@ -11,9 +12,11 @@ using ProjectTemplate.Infrastructure.Persistance.Contexts;
 namespace ProjectTemplate.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713074633_mig_5")]
+    partial class mig_5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +165,7 @@ namespace ProjectTemplate.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCharges");
+                    b.ToTable("UserCharge");
                 });
 
             modelBuilder.Entity("ProjectTemplate.Domain.Entities.Transaction", b =>

@@ -19,6 +19,7 @@ namespace ProjectTemplate.Infrastructure.Persistance.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
+        public DbSet<UserCharge> UserCharges { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
